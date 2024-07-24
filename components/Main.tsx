@@ -20,8 +20,20 @@ export default function Main() {
         e.preventDefault()
         setIsLoading(true)
         try {
-            const imageUrl = await generateImage(prompt)
-            setImage(imageUrl)
+            const res = await (await fetch('/api/text-to-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model_id: "ByteDance/SDXL-Lightning",
+                    prompt,
+                    width: 1024,
+                    height: 1024,
+                }),
+            })).json();
+
+            setImage(res)
         } catch (error) {
             console.error('Error generating image:', error)
         } finally {

@@ -1,7 +1,8 @@
 "use client"
+import { zeroAddress } from "viem";
 import { useReadContract } from "wagmi";
 
-const GATEWAY_ADDRESS = "0xa8bB618B1520E284046F3dFc448851A1Ff26e41B";
+const GATEWAY_ADDRESS = zeroAddress;
 
 export const useGatewayBalance = (): bigint => {
     const { data } = useReadContract({

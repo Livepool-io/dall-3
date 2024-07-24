@@ -1,17 +1,24 @@
 import axios from 'axios'
 
-const GATEWAY_URL = 'GATEWAY_URL'
+const GATEWAY_URL = 'http://81.83.17.122:8936'
 
 export const generateImage = async (prompt: string) => {
     try {
-        const response = await axios.post(`${GATEWAY_URL}/text-to-image`, { prompt })
-        return response.data.imageUrl
+        const response = await fetch(`${GATEWAY_URL}/text-to-image`, {
+            method: 'POST',
+            body: JSON.stringify({ prompt, model_id: "ByteDance/SDXL-Lightning", width: 1024, height: 1024 }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+        );
+        const body = await response.json()
+        return `${GATEWAY_URL}/${body.images[0].url}`;
     } catch (error) {
-        console.error('Error generating image:', error)
-        throw error
+        console.error('Error generating image:', error);
+        throw error;
     }
-}
-
+};
 export const improveImage = async (image: File, prompt: string) => {
     try {
         const formData = new FormData()
