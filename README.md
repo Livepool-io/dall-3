@@ -1,6 +1,6 @@
 # DALL-3: A Livepeer AI subnet demo app
 
-![alt text](https://postimg.cc/bGnc5V36)
+[![image.png](https://i.postimg.cc/W4WNhQrP/image.png)](https://postimg.cc/bGnc5V36)
 
 ## Getting Started
 
