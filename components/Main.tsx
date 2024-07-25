@@ -166,6 +166,7 @@ export default function Main() {
                                     <CardTitle className="text-2xl text-green-400">Generated Image</CardTitle>
                                 </CardHeader>
                                 <CardContent>
+                                    <a href={image}>Link to Image</a>
                                     <img
                                         src={image}
                                         alt="Generated"
