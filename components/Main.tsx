@@ -8,6 +8,7 @@ import { generateImage, improveImage, upscaleImage } from '@/lib/aiService'
 import { Loader2, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Textarea } from "@/components/ui/textarea"
+import { ImageDisplay } from './GeneratedResult'
 
 export default function Main() {
     const [prompt, setPrompt] = useState('')
@@ -155,27 +156,10 @@ export default function Main() {
                         </CardContent>
                     </Card>
 
-                    {image && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Card className="mt-8 bg-gray-800/50 border-gray-700 overflow-hidden rounded-2xl backdrop-blur-sm shadow-xl">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-green-400">Generated Image</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <a href={image}>Link to Image</a>
-                                    <img
-                                        src={image}
-                                        alt="Generated"
-                                        className="w-full rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-                                    />
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    )}
+                    <div>
+                        {/* ... other components */}
+                        {image && <ImageDisplay imageUrl={image} />}
+                    </div>
                 </motion.div>
             </div>
         </>
