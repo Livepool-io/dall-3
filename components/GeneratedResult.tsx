@@ -33,7 +33,6 @@ export function ImageDisplay({ imageUrl }: { imageUrl: string }) {
                         <p className="text-red-500">{error}</p>
                     ) : (
                         <>
-                            <a href={proxyUrl}>Link to Image</a>
                             <img
                                 src={proxyUrl}
                                 alt="Generated"
