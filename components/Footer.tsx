@@ -5,7 +5,7 @@ import { formatEther } from 'viem'
 export const Footer = () => {
     const gateWayBalance = useGatewayBalance();
     return (
-        <footer className="my-8 min-w-full justify-center gap-4">
+        <footer className="my-4 min-w-full justify-center gap-4">
             <div className="text-center mb-8">
                 <p className="text-gray-400">{"This is a free, open source project. It is funded entirely by donatations 💚"}</p>
                 <p className="text-gray-400">{`The gateway currently has ${formatEther(0n)} ETH remaining`}</p>

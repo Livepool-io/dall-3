@@ -70,7 +70,7 @@ export default function Main() {
 
     return (
         <>
-            <div className="text-white py-12 px-4 sm:px-6 lg:px-8">
+            <div className="text-white py-8 px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -79,11 +79,11 @@ export default function Main() {
                 >
                     <Card className="bg-gray-800/50 border-gray-700 rounded-2xl overflow-hidden backdrop-blur-sm shadow-xl">
                         <CardHeader className="border-b border-gray-700 pb-6">
-                            <CardTitle className="text-3xl text-green-400 flex items-center gap-2">
+                            <CardTitle className="text-xl text-green-400 flex items-center gap-2">
                                 <Sparkles className="w-8 h-8" />
                                 generate, improve, or upscale images
                             </CardTitle>
-                            <CardDescription className="text-xl">
+                            <CardDescription className="text-lg">
                                 Open-source AI models on a decentralised network, bringing you true <b>OPEN</b> AI.
 
                             </CardDescription>
