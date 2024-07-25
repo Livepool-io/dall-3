@@ -13,7 +13,7 @@ export const generateImage = async (prompt: string) => {
         }
         );
         const body = await response.json()
-        return `${GATEWAY_URL}/${body.images[0].url}`;
+        return `${GATEWAY_URL}${body.images[0].url}`;
     } catch (error) {
         console.error('Error generating image:', error);
         throw error;
