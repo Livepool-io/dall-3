@@ -13,37 +13,58 @@ export const generateImage = async (prompt: string) => {
         }
         );
         const body = await response.json()
-        return `${GATEWAY_URL}${body.images[0].url}`;
+        return `${GATEWAY_URL}${body?.images?.[0]?.url}`;
     } catch (error) {
         console.error('Error generating image:', error);
         throw error;
     }
 };
-export const improveImage = async (image: File, prompt: string) => {
+export const improveImage = async (prompt: string, image: File): Promise<string> => {
     try {
-        const formData = new FormData()
-        formData.append('image', image)
-        formData.append('prompt', prompt)
-        const response = await axios.post(`${GATEWAY_URL}/image-to-image`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        })
-        return response.data.imageUrl
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('prompt', prompt);
+        formData.append('model_id', "ByteDance/SDXL-Lightning");
+
+        const response = await fetch(`${GATEWAY_URL}/image-to-image`, {
+            method: 'POST',
+            body: formData,
+            // No need to explicitly set Content-Type for FormData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return `${GATEWAY_URL}${data?.images?.[0]?.url}`;
     } catch (error) {
-        console.error('Error improving image:', error)
-        throw error
+        console.error('Error improving image:', error);
+        throw error;
     }
 }
 
-export const upscaleImage = async (image: File) => {
+export const upscaleImage = async (prompt: string, image: File): Promise<string> => {
     try {
-        const formData = new FormData()
-        formData.append('image', image)
-        const response = await axios.post(`${GATEWAY_URL}/upscale`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        })
-        return response.data.imageUrl
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('prompt', prompt);
+        formData.append('model_id', 'stabilityai/stable-diffusion-x4-upscaler')
+
+        const response = await fetch(`${GATEWAY_URL}/upscale`, {
+            method: 'POST',
+            body: formData,
+            // No need to explicitly set Content-Type for FormData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return `${GATEWAY_URL}${data?.images?.[0]?.url}`
     } catch (error) {
-        console.error('Error upscaling image:', error)
-        throw error
+        console.error('Error upscaling image:', error);
+        throw error;
     }
 }

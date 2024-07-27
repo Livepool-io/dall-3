@@ -1,12 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { improveImage } from '@/lib/aiService';
-import { ImageToImageRequest } from '@/types/ai';
 
-export const POST = async (req: NextRequest) => {
-    if (req.method !== 'POST') return NextResponse.error();
-    const body: ImageToImageRequest = await req.json();
+export async function POST(req: NextRequest) {
+    if (req.method !== 'POST') {
+        return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+    }
 
-    const img = await improveImage(body.image, body.prompt);
+    try {
+        const formData = await req.formData();
+        const prompt = formData.get('prompt') as string | null;
+        const image = formData.get('image') as File | null;
 
-    return NextResponse.json(img);
+        if (!prompt) {
+            return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+        }
+
+        if (!image) {
+            return NextResponse.json({ error: 'Image is required' }, { status: 400 });
+        }
+
+
+        const improvedImage = await improveImage(prompt, image);
+
+        return NextResponse.json(improvedImage);
+    } catch (error) {
+        console.error('Error improving image:', error);
+        return NextResponse.json({ error: 'Error processing request' }, { status: 500 });
+    }
 }

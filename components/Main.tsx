@@ -44,30 +44,67 @@ export default function Main() {
 
     const handleImageToImage = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!uploadedImage) return
-        setIsLoading(true)
+        if (!uploadedImage) return;
+        setIsLoading(true);
         try {
-            const imageUrl = await improveImage(uploadedImage, prompt)
-            setImage(imageUrl)
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append the image file to the FormData
+            // Assuming uploadedImage is a File object
+            formData.append('prompt', prompt);
+            formData.append('image', uploadedImage);
+
+            const response = await fetch('/api/image-to-image', {
+                method: 'POST',
+                // Don't set Content-Type header, let the browser set it
+                // with the correct boundary for multipart/form-data
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const res = await response.json();
+            setImage(res); // Adjust this based on your API response structure
         } catch (error) {
-            console.error('Error improving image:', error)
+            console.error('Error upscaling image:', error);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
     const handleUpscale = async () => {
-        if (!uploadedImage) return
-        setIsLoading(true)
+        if (!uploadedImage) return;
+        setIsLoading(true);
         try {
-            const imageUrl = await upscaleImage(uploadedImage)
-            setImage(imageUrl)
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append the image file to the FormData
+            // Assuming uploadedImage is a File object
+            formData.append('image', uploadedImage);
+
+            const response = await fetch('/api/upscale', {
+                method: 'POST',
+                // Don't set Content-Type header, let the browser set it
+                // with the correct boundary for multipart/form-data
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const res = await response.json();
+            setImage(res); // Adjust this based on your API response structure
         } catch (error) {
-            console.error('Error upscaling image:', error)
+            console.error('Error upscaling image:', error);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -90,7 +127,9 @@ export default function Main() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-6">
-                            <Tabs defaultValue="text-to-image" className="w-full">
+                            <Tabs defaultValue="text-to-image" className="w-full" onValueChange={() => {
+                                setImage("")
+                            }}>
                                 <TabsList className="grid w-full grid-cols-3 mb-8 rounded-xl bg-gray-700/50 p-1">
                                     <TabsTrigger value="text-to-image" className="rounded-lg text-base">Generate</TabsTrigger>
                                     <TabsTrigger value="image-to-image" className="rounded-lg text-base">Improve</TabsTrigger>
