@@ -20,8 +20,8 @@ export const Footer = () => {
                 <br />
                 <p className="text-green-300 text-sm">Running in off-chain mode on Livepool</p>
             </div>
-            <div className="flex gap-4 justify-center items-center">
-                <div className="text-2xl text-center text-gray-500 text-center">powered by</div> <img src="/livepeer.svg" alt="Livepeer" width={100} height={100} />
+            <div className="flex gap-2 justify-center items-center">
+                <div className="text-2xl text-center text-gray-500 text-center">powered by</div> <img src="/livepeer.svg" className="opacity-50" alt="Livepeer" width={110} height={100} />
             </div>
         </footer>
     )

@@ -108,7 +108,7 @@ export default function Main() {
 
     return (
         <>
-            <div className="text-white py-8 px-4 sm:px-6 lg:px-8">
+            <div className="text-white mt-4 px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
