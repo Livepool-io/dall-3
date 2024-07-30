@@ -2,7 +2,7 @@
 import { zeroAddress } from "viem";
 import { useReadContract } from "wagmi";
 
-const GATEWAY_ADDRESS = zeroAddress;
+export const GATEWAY_ADDRESS = "0x8b54af7989407F3429607c7b609c3100B0E33278";
 
 export const useGatewayBalance = (): bigint => {
     const { data } = useReadContract({
